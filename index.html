@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>USVEX Data Visualization Tool</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+<script src="data.js"></script>
+</head>
+<body>
+
+<header class="usvex-header">
+  <a id="home-reset" class="usvex-app-title-link" href="#">
+    <img class="usvex-logo" src="logo-dark.png" alt="USVEX — United States Violence Experiences Survey">
+    <span>VEX Data Visualization Tool</span>
+  </a>
+</header>
+
+<button type="button" id="topbar-toggle" class="usvex-bar-toggle" aria-expanded="true" aria-controls="topbar">
+  Chart controls <span class="caret">&#9662;</span>
+</button>
+<div class="usvex-topbar" id="topbar">
+  <div class="usvex-control">
+    <label for="time_period">Time period</label>
+    <select id="time_period">
+      <option value="lifetime">Lifetime</option>
+      <option value="past_year" selected>Past Year</option>
+    </select>
+  </div>
+  <div class="usvex-control">
+    <label for="topic">Topic</label>
+    <select id="topic">
+      <option value="physical" selected>Physical Violence</option>
+      <option value="sexual">Sexual Violence</option>
+      <option value="ipv">Intimate Partner Violence</option>
+      <option value="sexual_perp">Sexual Violence Perpetration</option>
+      <option value="physical_perp">Physical Violence Perpetration</option>
+    </select>
+  </div>
+  <div class="usvex-control">
+    <label for="demographic">Compare by</label>
+    <select id="demographic">
+      <option value="GENDER_NEW" selected>Gender</option>
+      <option value="REGION4">US Region</option>
+      <option value="METRO">Metro/Non-Metro</option>
+      <option value="AGE_6">Age</option>
+      <option value="RACE_5">Race/Ethnicity</option>
+      <option value="LGB_3">Sexuality</option>
+      <option value="MARITAL">Marital Status</option>
+      <option value="INCOME_QUINTILE">Household Income</option>
+      <option value="HOUSING">Home Ownership</option>
+      <option value="EDUC_4">Education Level</option>
+      <option value="EMPLOY_2">Employment Status</option>
+      <option value="DISABILITY">Disability Status</option>
+      <option value="IDEO">Political Ideology</option>
+    </select>
+  </div>
+  <div class="usvex-control usvex-control-divided">
+    <label for="statistics">Statistics display</label>
+    <select id="statistics">
+      <option value="percent" selected>Percent (%)</option>
+      <option value="count">Raw number (n)</option>
+    </select>
+  </div>
+  <div class="usvex-control usvex-control-slider" id="slider-control">
+    <label for="scale_max">Y-axis max (<span id="scale_max_unit">%</span>) <span id="scale_max_value">40</span></label>
+    <input type="range" id="scale_max" min="5" max="100" step="5" value="40">
+  </div>
+</div>
+
+<div class="usvex-body">
+  <div class="usvex-sidebar-wrap" id="sidebar-wrap">
+    <button type="button" id="sidebar-toggle" class="usvex-bar-toggle" aria-expanded="true" aria-controls="sidebar">
+      Filters <span class="caret">&#9662;</span>
+    </button>
+    <aside class="usvex-sidebar" id="sidebar">
+      <div class="usvex-sidebar-checks">
+        <label class="usvex-check"><input type="checkbox" id="overall" checked> Overall (all respondents)</label>
+        <label class="usvex-check" id="subcat-wrap"><input type="checkbox" id="show_subcategories"> Show subcategories</label>
+      </div>
+
+      <details class="usvex-acc" open>
+        <summary>Location</summary>
+        <div class="usvex-acc-body" id="location-filters"></div>
+      </details>
+
+      <details class="usvex-acc">
+        <summary>Notes</summary>
+        <div class="usvex-acc-body">
+          <ul class="usvex-notes-list">
+            <li>All data are weighted.</li>
+            <li>Interpret proportions and percentages with caution when the cell size is less than 50.</li>
+            <li>We cannot assume that differences are statistically significant.</li>
+            <li>Hover over a bar to see the raw count behind it.</li>
+            <li>Charts can be downloaded as a PNG with the camera icon in the chart toolbar.</li>
+            <li>On default, the app shows data for all US regions.</li>
+          </ul>
+        </div>
+      </details>
+
+      <footer class="usvex-cite">
+        <!-- TODO: replace with the official USVEX citation once finalized -->
+        National Violence Experiences (USVEX) Online Data Visualization Tool. 2026.
+        Newcomb Institute, Tulane University.
+      </footer>
+    </aside>
+  </div>
+
+  <main class="usvex-main">
+    <div id="validation-msg" class="usvex-validation" hidden></div>
+    <div id="chart" class="usvex-chart"></div>
+    <div id="footnotes" class="usvex-footnotes"></div>
+
+    <section class="usvex-refine">
+      <div class="usvex-refine-head">
+        <span class="usvex-refine-label">Demographic Specifics</span>
+        <span class="usvex-refine-sub">optional — uncheck groups to narrow who's included</span>
+      </div>
+      <div class="usvex-refine-grid" id="demographic-filters"></div>
+    </section>
+  </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

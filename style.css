@@ -1,0 +1,304 @@
+:root {
+  /* Matches the CalVEX dashboard's purple palette per request; swap these
+     for USVEX's own brand color whenever one is finalized. */
+  --usvex-purple-light: #c8b8e2;
+  --usvex-purple-mid: #CEA9EA;
+  --usvex-purple-hover: #B08FD4;
+  --usvex-purple-active: #8E6FB0;
+  --usvex-purple-deep: #6b558e;
+  --usvex-purple-border: rgba(107, 85, 142, 0.35);
+  --usvex-border: #e5e7eb;
+  --usvex-muted: #6b7280;
+  --usvex-font: Inter, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: auto;
+  font-family: var(--usvex-font);
+  background: #fff;
+  color: #111;
+}
+
+input[type="checkbox"] { accent-color: var(--usvex-purple-active); }
+input[type="range"] { accent-color: var(--usvex-purple-deep); }
+
+/* ---- header ---- */
+.usvex-header {
+  background-color: var(--usvex-purple-light);
+  border-bottom: 1px solid var(--usvex-purple-border);
+  padding: 0.4rem 1.1rem;
+  flex-shrink: 0;
+}
+.usvex-app-title-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  text-decoration: none;
+  color: #000;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+.usvex-app-title-link:hover { opacity: 0.85; }
+.usvex-logo { height: 2.6rem; width: auto; display: block; flex-shrink: 0; }
+
+/* ---- top control bar ---- */
+.usvex-topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.8rem 1.35rem;
+  padding: 0.8rem 1.25rem;
+  background: var(--usvex-purple-light);
+  border-bottom: 1px solid var(--usvex-purple-border);
+  flex-shrink: 0;
+}
+.usvex-control { display: flex; flex-direction: column; }
+.usvex-control label {
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 0.07em;
+  color: #000;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  white-space: nowrap;
+}
+.usvex-control select {
+  font-family: var(--usvex-font);
+  font-size: 0.875rem;
+  padding: 0.42rem 0.55rem;
+  border: 1px solid #cfc4e2;
+  border-radius: 0.375rem;
+  background: #fff;
+  min-width: 150px;
+  max-width: 260px;
+}
+.usvex-control select:disabled {
+  color: #9aa5b1;
+  background: #f2f4f6;
+}
+.usvex-control-divided {
+  border-left: 1px solid var(--usvex-purple-border);
+  padding-left: 1.35rem;
+}
+.usvex-control-slider { flex: 1 1 220px; min-width: 190px; margin-left: auto; }
+.usvex-control-slider input[type="range"] { width: 100%; margin: 0.55rem 0 0.3rem; }
+#scale_max_value {
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--usvex-purple-deep);
+}
+
+/* ---- collapse toggle (chart controls bar) ---- */
+.usvex-bar-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  background: var(--usvex-purple-light);
+  border: none;
+  border-bottom: 1px solid var(--usvex-purple-border);
+  padding: 0.5rem 1rem;
+  font-family: var(--usvex-font);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #000;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.usvex-bar-toggle:hover { background: #DDD0EF; }
+.usvex-bar-toggle .caret { transition: transform 0.15s ease; }
+.usvex-bar-toggle.closed .caret { transform: rotate(-90deg); }
+.usvex-topbar.collapsed { display: none; }
+
+/* ---- layout: sidebar (Overall/subcategory toggles + Location) + main ---- */
+.usvex-body {
+  display: flex;
+  /* stretch (the default) makes the sidebar match the taller main column's
+     height, so its purple background runs the full page instead of
+     stopping wherever the sidebar's own (shorter) content ends */
+  align-items: stretch;
+}
+.usvex-sidebar-wrap {
+  display: flex;
+  flex-direction: column;
+  width: 260px;
+  flex-shrink: 0;
+  background-color: var(--usvex-purple-light);
+  border-right: 1px solid var(--usvex-purple-border);
+}
+.usvex-sidebar-wrap.collapsed { width: auto; }
+.usvex-sidebar-wrap.collapsed .usvex-sidebar { display: none; }
+.usvex-sidebar-wrap.collapsed .usvex-bar-toggle { border-bottom: none; }
+.usvex-sidebar { padding: 0.75rem 0.8rem 1rem; }
+.usvex-sidebar-checks { padding: 0.15rem 0.15rem 0.65rem; }
+
+.usvex-check {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 0.35rem;
+  cursor: pointer;
+}
+
+/* accordion via <details> (Location in the sidebar; Notes below the
+   Demographic Specifics section) */
+.usvex-acc {
+  border: 1px solid var(--usvex-purple-border);
+  border-radius: 0.375rem;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+  background-color: var(--usvex-purple-light);
+}
+.usvex-acc summary {
+  list-style: none;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 0.7rem 0.9rem;
+  user-select: none;
+}
+.usvex-acc summary::-webkit-details-marker { display: none; }
+.usvex-acc summary::after { content: " \25BE"; float: right; }
+.usvex-acc[open] summary { background-color: var(--usvex-purple-mid); }
+.usvex-acc[open] summary::after { content: " \25B4"; }
+.usvex-acc summary:hover { background-color: #DDD0EF; }
+.usvex-acc-body { padding: 0.25rem 0.9rem 0.9rem; }
+
+/* filter groups */
+.usvex-filter-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 1rem 0 0.35rem;
+}
+.usvex-filter-group:first-child .usvex-filter-head { margin-top: 0.6rem; }
+.usvex-filter-label { font-weight: 600; font-size: 0.92rem; }
+.usvex-filter-links a {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--usvex-purple-deep);
+  text-decoration: none;
+  margin-left: 0.6rem;
+}
+.usvex-filter-links a:hover { text-decoration: underline; }
+.usvex-filter-group .usvex-check {
+  font-size: 0.9rem;
+  line-height: 1.45;
+  margin-bottom: 0.35rem;
+}
+.usvex-filter-help {
+  display: block;
+  font-size: 0.78rem;
+  color: #3f3a4d;
+  margin-top: 0.45rem;
+}
+
+.usvex-notes-list {
+  font-size: 0.85rem;
+  padding-left: 1.1rem;
+  color: #222;
+  margin: 0.5rem 0 0;
+}
+.usvex-notes-list li { margin-bottom: 0.3rem; }
+
+.usvex-cite {
+  padding: 0.5rem 0.15rem;
+  font-size: 0.75rem;
+  color: #333;
+  line-height: 1.5;
+}
+.usvex-cite a { color: var(--usvex-purple-deep); }
+
+/* ---- main chart area ---- */
+.usvex-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  background: #fff;
+  padding: 8px 16px 24px;
+}
+.usvex-chart { width: 100%; }
+.usvex-validation {
+  padding: 3rem 1rem;
+  text-align: center;
+  color: var(--usvex-muted);
+  font-size: 1rem;
+}
+.usvex-footnotes {
+  border-top: 1px solid #eef0f3;
+  padding: 0.6rem 0.25rem 0.5rem;
+}
+.usvex-footnotes p {
+  margin: 0.25rem 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: #6b7280;
+}
+
+/* ---- refine population: filters, moved below the chart instead of a
+   persistent sidebar ---- */
+.usvex-refine {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--usvex-border);
+}
+.usvex-refine-head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.15rem 0.75rem;
+  margin-bottom: 0.9rem;
+}
+.usvex-refine-label {
+  font-weight: 700;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #000;
+}
+.usvex-refine-sub {
+  font-size: 0.82rem;
+  color: var(--usvex-muted);
+}
+.usvex-refine-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem 2.5rem;
+  margin-bottom: 1.5rem;
+}
+.usvex-refine-grid .usvex-filter-group {
+  flex: 1 1 190px;
+  max-width: 260px;
+}
+/* Every group's heading needs the same top margin so headings in the same
+   row line up — the old first-child-gets-zero-margin rule was for the
+   removed accordion context (compensating for the panel header above it)
+   and made "Gender" sit higher than "Sexuality"/"Age"/"Race/Ethnicity"
+   beside it now that these are plain grid siblings, not accordion content. */
+.usvex-refine-grid .usvex-filter-head { margin-top: 0; }
+
+/* ---- responsive ---- */
+@media (max-width: 900px) {
+  .usvex-control-divided { border-left: none; padding-left: 0; }
+  .usvex-control-slider { margin-left: 0; }
+  .usvex-control { flex: 1 1 calc(50% - 0.9rem); min-width: 0; }
+  .usvex-control select { width: 100%; max-width: none; }
+}
+@media (max-width: 768px) {
+  .usvex-body { flex-direction: column; }
+  .usvex-sidebar-wrap {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--usvex-purple-border);
+  }
+  .usvex-app-title-link { font-size: 1rem; }
+  .usvex-logo { height: 1.9rem; }
+  .usvex-refine-grid { gap: 1.25rem 1.5rem; }
+  .usvex-refine-grid .usvex-filter-group { flex: 1 1 140px; }
+}
